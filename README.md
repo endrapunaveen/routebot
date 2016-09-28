@@ -1,2 +1,2 @@
 # routebot
-Slack bot application using AWS Lambda and API Gateway
+routebot for Slack using AWS Lambda
