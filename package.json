@@ -1,15 +1,14 @@
 {
-  "name": "routebot",
-  "version": "1.0.0",
-  "description": "Route bot for Slack using AWS Lambda",
-  "license": "",
-  "author": "Naveen Endrapu",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "request": "^2.75.0",
-    "striptags": "^2.1.1"
-  }
+	"name": "routebot",
+	"version": "1.0.0",
+	"description": "Route bot for Slack using AWS Lambda",
+	"author": "Naveen Endrapu",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"request": "^2.75.0",
+		"striptags": "^2.1.1"
+	}
 }

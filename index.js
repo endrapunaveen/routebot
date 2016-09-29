@@ -3,17 +3,25 @@ var request = require('request');
 var striptags = require('striptags');
 
 exports.handler = (event, context, callback) => {
-	//var event = {text : 'route from Hyderabad to bangalore', trigger_word : 'route'};
+
+	var mapObj = {
+	   "<b>":" *",
+	   "</b>":"* ",
+	   "<div>":" ",
+	   "</div>":" ",
+	  };
+	//var event = {text : 'route from New York to Boston', trigger_word : 'route'};
 
 	console.log('starting ... : '+event['text']);
 
 	var triggerWord = event['trigger_word'];
-  var words = event['text'].split(triggerWord);
+	var words = event['text'].split(triggerWord);
 
 	if (typeof words[1] == 'undefined' || words[1].length == 1) {
     callback(null, {"text": "`Usage: " + triggerWord + " from <origin> to <destination>`"});
   } else {
-		words = words[1].trim().split("to");
+		words = words[1].trim().split(" to ");
+		console.log('words : '+words);
 		if (words.length == 2) {
 			var startPoint  = words[0].trim().split("from");
 
@@ -38,29 +46,33 @@ exports.handler = (event, context, callback) => {
 								var distance = routeLegs.distance.text;
 
 								var steps = routeLegs.steps;
-								var stepsDetails = '\n*Please find the directions below*\n';
-
+								var stepsDetails = '\n*Driving Instructions :*\n';
+								var str= "";
 								for (var stepNo = 1; stepNo < steps.length; stepNo++) {
+									str = steps[stepNo].html_instructions;
+									str = str.replace(/<b>|<\/b>|<div>|<\/div>/gi, function(matched){
+									  return mapObj[matched];
+									});
 									stepsDetails = stepsDetails + '\n '+ stepNo + '. After travelling '+
 									 steps[stepNo].distance.text +', '+
-									 striptags(steps[stepNo].html_instructions);
+									 striptags(str)
 								}
 
 								var result =
-									'\n******* Route Details ******'+
-									'\n*'+ startAddress +'   ======>   '+endAddress +'*'+
-									'\nDuration : '+durationTime+
-									', Distance: '+distance+
-									'\n '+stepsDetails;
+									'\n******* *Route Details* ******'+
+									' \n*'+ startAddress +'   ======>   '+endAddress +'*'+
+									' \nDuration : *'+durationTime+
+									' * , Distance: *'+distance+
+									'* \n '+stepsDetails;
 
-							  //console.log('result : '+result);
-
+							  	//console.log('result : '+result);
+	
 								callback(null, {"text": result});
 							} else {
-								callback(null, {"text": "Route not found"});
+								callback(null, {"text": "Route not found, Please provide clear locations"});
 							}
 				    } else {
-							callback(null, {"text": "Route not found"});
+							callback(null, {"text": "Route not found, , Please provide clear locations"});
 						}
 				});
 			} else {
