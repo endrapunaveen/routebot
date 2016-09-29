@@ -15,11 +15,11 @@ The Route details which include Duration, Distance and Driving instructions will
  If the route is not found, it will post the message (Route not found, Please provide clear locations) into your Slack channel.
 
 ## Examples
- ### Below is the example for command "route from Lonon to Wales"
+### Below is the example for command "route from Lonon to Wales"
  
  ![alt tag](./imgs/route_from_londo_to_wales)
 
- ### Below is the example when when route is not found
+### Below is the example when when route is not found
 
   endrapunaveen [5:15 PM] 
   route from test to test123
